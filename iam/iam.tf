@@ -7,6 +7,11 @@ resource "aws_iam_access_key" "develop" {
   pgp_key = "keybase:nao_e"
 }
 
+resource "aws_iam_user_login_profile" "develop" {
+  user    = aws_iam_user.develop.name
+  pgp_key = "keybase:nao_e"
+}
+
 resource "aws_iam_user_policy" "develop" {
   name   = "develop"
   user   = aws_iam_user.develop.name
@@ -38,4 +43,8 @@ data "aws_iam_policy_document" "develop-doc" {
 
 output "secret" {
   value = aws_iam_access_key.develop.encrypted_secret
+}
+
+output "password" {
+  value = aws_iam_user_login_profile.develop.encrypted_password
 }
